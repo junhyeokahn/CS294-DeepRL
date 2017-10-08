@@ -25,6 +25,7 @@ def main():
     parser.add_argument("--max_timesteps", type=int)
     parser.add_argument('--num_rollouts', type=int, default=20,
                         help='Number of expert roll outs')
+    parser.add_argument('--out_file', type=str, help='save expert data to file')
     args = parser.parse_args()
 
     print('loading and building expert policy')
@@ -67,6 +68,10 @@ def main():
 
         expert_data = {'observations': np.array(observations),
                        'actions': np.array(actions)}
+
+        if args.out_file is not None:
+            pickle.dump(expert_data, open(args.out_file, 'wb'))
+            print("Data Set is Saved")
 
 if __name__ == '__main__':
     main()
